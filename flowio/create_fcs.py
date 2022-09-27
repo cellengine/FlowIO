@@ -238,7 +238,9 @@ def create_fcs(
         # PnS - optional channel label
         if opt_channel_names is not None:
             # cannot have zero-length values in FCS keyword values
-            if opt_channel_names[i] not in [None, '']:
+            opt_channel_name = opt_channel_names[i]
+            # second test is for NaNs (result from "None" and "" in Pandas indices)
+            if opt_channel_name not in [None, ''] and opt_channel_name == opt_channel_name:
                 text['P%dS' % chan_num] = opt_channel_names[i]
 
     # Calculate the text segment size. The text segment contains the byte offset
